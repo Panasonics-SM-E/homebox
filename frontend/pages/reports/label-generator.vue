@@ -205,6 +205,11 @@
   }
 
   const items = computed(() => {
+    if (displayProperties.assetRange < 0 || displayProperties.assetRangeMax < 0) {
+      notifier.error("Asset Range should not be negative.");
+      return [];
+    }
+
     if (displayProperties.assetRange > displayProperties.assetRangeMax) {
       return [];
     }
