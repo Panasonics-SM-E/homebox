@@ -186,9 +186,9 @@
       origin = origin.slice(0, -1);
     }
 
-    const data = `${origin}/a/${assetID}`;
+    const data = `${origin}/a/${encodeURIComponent(assetID)}`;
 
-    return route(`/qrcode`, { data: encodeURIComponent(data) });
+    return route(`/qrcode`, { data });
   }
 
   function getItem(n: number): LabelData {
