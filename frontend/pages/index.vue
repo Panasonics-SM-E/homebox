@@ -67,6 +67,16 @@
 
   async function registerUser() {
     loading.value = true;
+    const isValidEmailAddress = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
+      email.value
+    );
+
+    if (!isValidEmailAddress) {
+      toast.error("The email address provided is invalid");
+      loading.value = false;
+      return;
+    }
+
     const { error } = await api.register({
       name: username.value,
       email: email.value,
@@ -76,6 +86,7 @@
 
     if (error) {
       toast.error("Problem registering user");
+      loading.value = false;
       return;
     }
 
