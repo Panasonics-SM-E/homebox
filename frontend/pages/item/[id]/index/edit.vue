@@ -61,6 +61,18 @@
       toast.error("Failed to save item: no location selected");
       return;
     }
+    if (item.value.quantity < 0) {
+      toast.error("Quantity cannot be negative");
+      return;
+    }
+    if(parseFloat(item.value.purchasePrice) < 0){
+      toast.error("Purchase price cannot be negative");
+      return;
+    }
+    if(parseFloat(item.value.soldPrice) < 0){
+      toast.error("Sold price cannot be negative");
+      return;
+    }
 
     const payload: ItemUpdate = {
       ...item.value,
@@ -68,6 +80,8 @@
       labelIds: item.value.labels.map(l => l.id),
       parentId: parent.value ? parent.value.id : null,
       assetId: item.value.assetId,
+      purchasePrice: String(item.value.purchasePrice),
+      soldPrice: String(item.value.soldPrice)
     };
 
     const { error } = await api.items.update(itemId.value, payload);
@@ -183,7 +197,7 @@
       ref: "purchaseFrom",
     },
     {
-      type: "text",
+      type: "number",
       label: "Purchase Price",
       ref: "purchasePrice",
     },
@@ -221,7 +235,7 @@
       ref: "soldTo",
     },
     {
-      type: "text",
+      type: "number",
       label: "Sold Price",
       ref: "soldPrice",
     },
