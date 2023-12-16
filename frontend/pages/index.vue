@@ -67,9 +67,7 @@
 
   async function registerUser() {
     loading.value = true;
-    const isValidEmailAddress = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-      email.value
-    );
+    const isValidEmailAddress = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email.value);
 
     if (!isValidEmailAddress) {
       toast.error("The email address provided is invalid");

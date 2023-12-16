@@ -100,7 +100,7 @@
   }
 
   async function createEntry() {
-    if(parseFloat(entry.cost) < 0){
+    if (parseFloat(entry.cost) < 0) {
       toast.error("Cost cannot be negative");
       return;
     }
@@ -154,7 +154,7 @@
     if (!entry.id) {
       return;
     }
-    if(parseFloat(entry.cost) < 0){
+    if (parseFloat(entry.cost) < 0) {
       toast.error("Cost cannot be negative");
       return;
     }
@@ -188,7 +188,7 @@
         <DatePicker v-model="entry.completedDate" label="Completed Date" />
         <DatePicker v-model="entry.scheduledDate" label="Scheduled Date" />
         <FormTextArea v-model="entry.description" label="Notes" />
-        <FormTextField v-model="entry.cost" autofocus label="Cost" type="number"/>
+        <FormTextField v-model="entry.cost" autofocus label="Cost" type="number" />
         <div class="py-2 flex justify-end">
           <BaseButton type="submit" class="ml-2 mt-2">
             <template #icon>
