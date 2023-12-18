@@ -188,8 +188,8 @@
           q: query.value,
           page: page.value,
           pageSize: pageSize.value,
-          isSold: isSold.value? "true" : "false",
-          hasMaintenance: hasMaintenance.value? "true" : "false",
+          isSold: isSold.value ? "true" : "false",
+          hasMaintenance: hasMaintenance.value ? "true" : "false",
           includeArchived: includeArchived.value ? "true" : "false",
         },
       });
@@ -368,7 +368,7 @@
               <input v-model="isSold" type="checkbox" class="toggle toggle-sm toggle-primary" />
               <span class="label-text ml-4"> Only Sold Items </span>
             </label> 
-            <hr class="my-2" />
+            <hr class="my-2"/>
             <BaseButton class="btn-block btn-sm" @click="reset"> Reset Search</BaseButton>
           </div>
         </div>
