@@ -39,7 +39,7 @@ func (ctrl *V1Controller) HandleItemsGetAll() errchain.HandlerFunc {
 
 			for _, v := range raw {
 				parts := strings.SplitN(v, "=", 2)
-				if len(parts) == 2 {
+				if len(parts) == 2 {					
 					items = append(items, repo.FieldQuery{
 						Name:  parts[0],
 						Value: parts[1],
@@ -57,6 +57,8 @@ func (ctrl *V1Controller) HandleItemsGetAll() errchain.HandlerFunc {
 			LocationIDs:     queryUUIDList(params, "locations"),
 			LabelIDs:        queryUUIDList(params, "labels"),
 			IncludeArchived: queryBool(params.Get("includeArchived")),
+			HasMaintenance:  queryBool(params.Get("hasMaintenance")),
+			IsSold: 		 queryBool(params.Get("isSold")),
 			Fields:          filterFieldItems(params["fields"]),
 			OrderBy:         params.Get("orderBy"),
 		}
@@ -70,7 +72,6 @@ func (ctrl *V1Controller) HandleItemsGetAll() errchain.HandlerFunc {
 				v.AssetID = aid
 			}
 		}
-
 		return v
 	}
 
