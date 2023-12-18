@@ -367,8 +367,8 @@
             <label class="label cursor-pointer mr-auto">
               <input v-model="isSold" type="checkbox" class="toggle toggle-sm toggle-primary" />
               <span class="label-text ml-4"> Only Sold Items </span>
-            </label> 
-            <hr class="my-2"/>
+            </label>
+            <hr class="my-2" />
             <BaseButton class="btn-block btn-sm" @click="reset"> Reset Search</BaseButton>
           </div>
         </div>
