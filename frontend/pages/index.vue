@@ -162,7 +162,7 @@
                 <div class="card-body">
                   <h2 class="card-title text-2xl align-center">
                     <Icon name="heroicons-user" class="mr-1 w-7 h-7" />
-                    Registerrr
+                    Register
                   </h2>
                   <FormTextField v-model="email" label="Set your email?" />
                   <FormTextField v-model="username" label="What's your name?" />
