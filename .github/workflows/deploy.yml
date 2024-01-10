@@ -6,8 +6,16 @@ on:
       - dev
 
 jobs:
+  backend-tests:
+    name: "Backend Server Tests"
+    uses: Panasonics-SM-E/homebox/.github/workflows/partial-backend.yaml@dev
+
+  frontend-tests:
+    name: "Frontend and End-to-End Tests"
+    uses: Panasonics-SM-E/homebox/.github/workflows/partial-frontend.yaml@dev
+
   deploy:
-    name: "Deploy to Fly.io"
+    name: "Deploy to Render"
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to production
