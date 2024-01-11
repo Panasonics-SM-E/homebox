@@ -19,6 +19,7 @@
     <input
       v-model="value"
       :placeholder="placeholder"
+      :type="type"
       class="input input-bordered col-span-3 w-full mt-2"
       aria-label="textfield"
     />

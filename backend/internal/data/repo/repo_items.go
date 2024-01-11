@@ -39,6 +39,8 @@ type (
 		ParentItemIDs   []uuid.UUID  `json:"parentIds"`
 		SortBy          string       `json:"sortBy"`
 		IncludeArchived bool         `json:"includeArchived"`
+		IsSold			bool         `json:"isSold"`
+		HasMaintenance  bool         `json:"hasMaintenance"`
 		Fields          []FieldQuery `json:"fields"`
 		OrderBy         string       `json:"orderBy"`
 	}
@@ -325,6 +327,22 @@ func (e *ItemsRepository) QueryByGroup(ctx context.Context, gid uuid.UUID, q Ite
 		item.HasGroupWith(group.ID(gid)),
 	)
 
+	if q.IsSold {
+		qb = qb.Where(
+			item.Or(
+				item.SoldToNEQ(""),
+			),
+		)
+	} 
+
+	if q.HasMaintenance {
+		qb = qb.Where(
+			item.Or(
+				item.HasMaintenanceEntries(),
+			),
+		)
+	} 
+
 	if q.IncludeArchived {
 		qb = qb.Where(
 			item.Or(
@@ -343,6 +361,8 @@ func (e *ItemsRepository) QueryByGroup(ctx context.Context, gid uuid.UUID, q Ite
 				item.DescriptionContainsFold(q.Search),
 				item.NotesContainsFold(q.Search),
 				item.ManufacturerContainsFold(q.Search),
+				item.ModelNumberContainsFold(q.Search),
+				item.SerialNumberContainsFold(q.Search),
 			),
 		)
 	}

@@ -100,12 +100,16 @@
   }
 
   async function createEntry() {
+    if (parseFloat(entry.cost) < 0) {
+      toast.error("Cost cannot be negative");
+      return;
+    }
     const { error } = await api.items.maintenance.create(props.item.id, {
       name: entry.name,
       completedDate: entry.completedDate ?? "",
       scheduledDate: entry.scheduledDate ?? "",
       description: entry.description,
-      cost: parseFloat(entry.cost) ? entry.cost : "0",
+      cost: parseFloat(entry.cost) ? String(entry.cost) : "0",
     });
 
     if (error) {
@@ -150,13 +154,17 @@
     if (!entry.id) {
       return;
     }
+    if (parseFloat(entry.cost) < 0) {
+      toast.error("Cost cannot be negative");
+      return;
+    }
 
     const { error } = await api.items.maintenance.update(props.item.id, entry.id, {
       name: entry.name,
       completedDate: entry.completedDate ?? "null",
       scheduledDate: entry.scheduledDate ?? "null",
       description: entry.description,
-      cost: entry.cost,
+      cost: String(entry.cost),
     });
 
     if (error) {
@@ -180,7 +188,7 @@
         <DatePicker v-model="entry.completedDate" label="Completed Date" />
         <DatePicker v-model="entry.scheduledDate" label="Scheduled Date" />
         <FormTextArea v-model="entry.description" label="Notes" />
-        <FormTextField v-model="entry.cost" autofocus label="Cost" />
+        <FormTextField v-model="entry.cost" autofocus label="Cost" type="number" />
         <div class="py-2 flex justify-end">
           <BaseButton type="submit" class="ml-2 mt-2">
             <template #icon>

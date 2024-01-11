@@ -1,0 +1,26 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  backend-tests:
+    name: "Backend Server Tests"
+    uses: Panasonics-SM-E/homebox/.github/workflows/partial-backend.yaml@dev
+
+  frontend-tests:
+    name: "Frontend and End-to-End Tests"
+    uses: Panasonics-SM-E/homebox/.github/workflows/partial-frontend.yaml@dev
+
+  deploy:
+    name: "Deploy to Render"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
+          api-key: ${{ secrets.MY_RENDER_API_KEY }}
+          wait-for-success: true
