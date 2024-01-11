@@ -34,6 +34,8 @@
   const advanced = useRouteQuery("advanced", false);
   const includeArchived = useRouteQuery("archived", false);
   const fieldSelector = useRouteQuery("fieldSelector", false);
+  const hasMaintenance = useRouteQuery("hasMaintenance", false);
+  const isSold = useRouteQuery("isSold", false);
 
   const totalPages = computed(() => Math.ceil(total.value / pageSize.value));
   const hasNext = computed(() => page.value * pageSize.value < total.value);
@@ -115,7 +117,6 @@
 
   function parseAssetIDString(d: string) {
     d = d.replace(/"/g, "").replace(/-/g, "");
-
     const aidInt = parseInt(d);
     if (isNaN(aidInt)) {
       return [-1, false];
@@ -187,6 +188,8 @@
           q: query.value,
           page: page.value,
           pageSize: pageSize.value,
+          isSold: isSold.value ? "true" : "false",
+          hasMaintenance: hasMaintenance.value ? "true" : "false",
           includeArchived: includeArchived.value ? "true" : "false",
         },
       });
@@ -197,7 +200,6 @@
     if (searchLocked.value) {
       return;
     }
-
     loading.value = true;
 
     const fields = [];
@@ -215,6 +217,8 @@
       locations: locIDs.value,
       labels: labIDs.value,
       includeArchived: includeArchived.value,
+      isSold: isSold.value,
+      hasMaintenance: hasMaintenance.value,
       page: page.value,
       pageSize: pageSize.value,
       fields,
@@ -262,6 +266,8 @@
         // Reactive
         advanced: "true",
         archived: includeArchived.value ? "true" : "false",
+        isSold: isSold.value ? "true" : "false",
+        hasMaintenance: hasMaintenance.value ? "true" : "false",
         fieldSelector: fieldSelector.value ? "true" : "false",
         pageSize: pageSize.value,
         page: page.value,
@@ -353,6 +359,14 @@
             <label class="label cursor-pointer mr-auto">
               <input v-model="fieldSelector" type="checkbox" class="toggle toggle-sm toggle-primary" />
               <span class="label-text ml-4"> Field Selector </span>
+            </label>
+            <label class="label cursor-pointer mr-auto">
+              <input v-model="hasMaintenance" type="checkbox" class="toggle toggle-sm toggle-primary" />
+              <span class="label-text ml-4"> Has Maintenance </span>
+            </label>
+            <label class="label cursor-pointer mr-auto">
+              <input v-model="isSold" type="checkbox" class="toggle toggle-sm toggle-primary" />
+              <span class="label-text ml-4"> Only Sold Items </span>
             </label>
             <hr class="my-2" />
             <BaseButton class="btn-block btn-sm" @click="reset"> Reset Search</BaseButton>
