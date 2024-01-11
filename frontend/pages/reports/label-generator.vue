@@ -64,6 +64,16 @@
   function calculateGridData(input: Input): Output {
     const { page, cardHeight, cardWidth } = input;
 
+    if (page.width < 0 || page.height < 0) {
+      notifier.error("Page width and height should not be negative.");
+      return out.value;
+    }
+
+    if (cardWidth < 0 || cardHeight < 0) {
+      notifier.error("Label width and height should not be negative.");
+      return out.value;
+    }
+
     const availablePageWidth = page.width - page.pageLeftPadding - page.pageRightPadding;
     const availablePageHeight = page.height - page.pageTopPadding - page.pageBottomPadding;
 
@@ -176,9 +186,9 @@
       origin = origin.slice(0, -1);
     }
 
-    const data = `${origin}/a/${assetID}`;
+    const data = `${origin}/a/${encodeURIComponent(assetID)}`;
 
-    return route(`/qrcode`, { data: encodeURIComponent(data) });
+    return route(`/qrcode`, { data });
   }
 
   function getItem(n: number): LabelData {
@@ -195,6 +205,11 @@
   }
 
   const items = computed(() => {
+    if (displayProperties.assetRange < 0 || displayProperties.assetRangeMax < 0) {
+      notifier.error("Asset Range should not be negative.");
+      return [];
+    }
+
     if (displayProperties.assetRange > displayProperties.assetRangeMax) {
       return [];
     }
@@ -259,6 +274,11 @@
     const calc: Page[] = [];
 
     const perPage = out.value.rows * out.value.cols;
+
+    if (perPage < 0) {
+      notifier.error("Invalid number of labels per page");
+      return;
+    }
 
     const itemsCopy = [...items.value];
 
