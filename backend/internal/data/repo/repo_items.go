@@ -337,7 +337,7 @@ func (e *ItemsRepository) QueryByGroup(ctx context.Context, gid uuid.UUID, q Ite
 	if q.IsSold {
 		qb = qb.Where(
 			item.Or(
-				item.SoldToNotNil(),
+				item.SoldToNEQ(""),
 			),
 		)
 	} 
