@@ -3,7 +3,14 @@
     <label class="label">
       <span class="label-text">{{ label }}</span>
     </label>
-    <input ref="input" v-model="value" :placeholder="placeholder" :type="type" class="input input-bordered w-full" />
+    <input
+      ref="input"
+      v-model="value"
+      :placeholder="placeholder"
+      :type="type"
+      class="input input-bordered w-full"
+      aria-label="textfield"
+    />
   </div>
   <div v-else class="sm:grid sm:grid-cols-4 sm:items-start sm:gap-4">
     <label class="label">
@@ -14,6 +21,7 @@
       :placeholder="placeholder"
       :type="type"
       class="input input-bordered col-span-3 w-full mt-2"
+      aria-label="textfield"
     />
   </div>
 </template>

@@ -370,6 +370,7 @@
             step="0.01"
             placeholder="Type here"
             class="input input-bordered w-full max-w-xs"
+            aria-label="number"
           />
         </div>
       </div>

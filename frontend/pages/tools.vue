@@ -99,7 +99,8 @@
     middleware: ["auth"],
   });
   useHead({
-    title: "Homebox | Profile",
+    title: "Homebox | Tools",
+    htmlAttrs: { lang: "en" },
   });
 
   const modals = ref({
@@ -125,6 +126,7 @@
 
   async function ensureAssetIDs() {
     const { isCanceled } = await confirm.open(
+      "Ensure Asset IDs",
       "Are you sure you want to ensure all assets have an ID? This can take a while and cannot be undone."
     );
 
@@ -144,6 +146,7 @@
 
   async function ensureImportRefs() {
     const { isCanceled } = await confirm.open(
+      "Ensure Import Refs",
       "Are you sure you want to ensure all assets have an import_ref? This can take a while and cannot be undone."
     );
 
@@ -163,6 +166,7 @@
 
   async function resetItemDateTimes() {
     const { isCanceled } = await confirm.open(
+      "Reset All Date and Time Values",
       "Are you sure you want to reset all date and time values? This can take a while and cannot be undone."
     );
 
@@ -182,6 +186,7 @@
 
   async function setPrimaryPhotos() {
     const { isCanceled } = await confirm.open(
+      "Set Primary Photos",
       "Are you sure you want to set primary photos? This can take a while and cannot be undone."
     );
 
