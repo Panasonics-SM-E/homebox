@@ -143,7 +143,6 @@
         <div>
           <h2
             class="mt-1 text-4xl font-bold tracking-tight text-neutral-content sm:text-5xl lg:text-6xl flex"
-            style="color: #929687"
           >
             HomeB
             <AppLogo class="w-12 -mb-4" />
@@ -246,7 +245,6 @@
                       class="btn btn-primary btn-block"
                       :class="loading ? 'loading' : ''"
                       :disabled="loading"
-                      style="background-color: #000100"
                     >
                       Login
                     </button>
@@ -259,7 +257,6 @@
             <BaseButton
               v-if="status && status.allowRegistration"
               class="btn-primary btn-wide"
-              style="background-color: #000100"
               @click="() => toggleLogin()"
             >
               <template #icon>
