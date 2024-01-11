@@ -23,9 +23,7 @@
 </script>
 
 <template>
-  <!-- eslint-disable vue/no-v-html -->
   <div class="markdown" v-html="raw"></div>
-  <!--eslint-enable-->
 </template>
 
 <style scoped>

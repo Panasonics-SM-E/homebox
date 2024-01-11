@@ -89,36 +89,6 @@ func serializeLocation[T ~[]string](location T) string {
 	return strings.Join(location, "/")
 }
 
-// Ooi J Sen
-// Function to validate headers
-func validateHeaders(expected, actual []string) bool {
-	actualHeaderCount := make(map[string]int)
-
-	// Count occurrences of headers in the actual slice
-	for _, header := range actual {
-		actualHeaderCount[header]++
-	}
-
-	// Check if all actual headers are within the expected headers
-	for header, count := range actualHeaderCount {
-		if count > 0 && !contains(expected, header) {
-			return false
-		}
-	}
-
-	return true
-}
-
-// Function to check if a string slice contains a specific string
-func contains(slice []string, str string) bool {
-	for _, s := range slice {
-		if s == str {
-			return true
-		}
-	}
-	return false
-}
-
 // CsvImport imports items from a CSV file. using the standard defined format.
 //
 // CsvImport applies the following rules/operations
@@ -132,16 +102,6 @@ func (svc *ItemService) CsvImport(ctx context.Context, GID uuid.UUID, data io.Re
 	err := sheet.Read(data)
 	if err != nil {
 		return 0, err
-	}
-	
-	// Ooi J Sen
-	// Access excel sheet headers
-	headers := sheet.GetHeaders()
-
-	// Validate column headers
-	expectedHeaders := []string{"HB.import_ref", "HB.location", "HB.labels", "HB.asset_id", "HB.archived", "HB.name", "HB.quantity", "HB.description", "HB.insured", "HB.notes", "HB.purchase_price", "HB.purchase_from", "HB.purchase_time", "HB.manufacturer", "HB.model_number", "HB.serial_number", "HB.lifetime_warranty", "HB.warranty_expires", "HB.warranty_details", "HB.sold_to", "HB.sold_price", "HB.sold_time", "HB.sold_notes",}
-	if !validateHeaders(expectedHeaders, headers) {
-		return 0, fmt.Errorf("CSV columns do not match the expected format")
 	}
 
 	// ========================================
@@ -201,12 +161,8 @@ func (svc *ItemService) CsvImport(ctx context.Context, GID uuid.UUID, data io.Re
 
 	finished := 0
 
-	var errorMessage string
-
 	for i := range sheet.Rows {
 		row := sheet.Rows[i]
-		
-		var hasNegativeValues bool
 
 		createRequired := true
 
@@ -221,25 +177,6 @@ func (svc *ItemService) CsvImport(ctx context.Context, GID uuid.UUID, data io.Re
 			if exists {
 				createRequired = false
 			}
-		}
-		
-		// Ooi J Sen
-		// Check integer fields for negative values
-		if row.Quantity < 0 {
-			errorMessage += fmt.Sprintf("Negative quantity at row %d\n", i+1)
-			hasNegativeValues = true
-		}
-		if row.PurchasePrice < 0 {
-			errorMessage += fmt.Sprintf("Negative purchase price at row %d\n", i+1)
-			hasNegativeValues = true
-		}
-		if row.SoldPrice < 0 {
-			errorMessage += fmt.Sprintf("Negative sold price at row %d\n", i+1)
-			hasNegativeValues = true
-		}
-
-		if (hasNegativeValues) {
-			continue
 		}
 
 		// ========================================
@@ -387,15 +324,6 @@ func (svc *ItemService) CsvImport(ctx context.Context, GID uuid.UUID, data io.Re
 		}
 
 		finished++
-	}
-
-	// Ooi J Sen
-	// Display error messages in console
-	if errorMessage != "" {
-		// Log or handle the error message here
-		fmt.Println("Error Messages:")
-		fmt.Println(errorMessage)
-		return 0, fmt.Errorf("Errors detected in CSV:\n%s", errorMessage)
 	}
 
 	return finished, nil

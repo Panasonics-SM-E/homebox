@@ -23,7 +23,6 @@
 
   async function confirmDelete() {
     const { isCanceled } = await confirm.open(
-      "Delete Label",
       "Are you sure you want to delete this label? This action cannot be undone."
     );
 
@@ -94,8 +93,8 @@
     <BaseModal v-model="updateModal">
       <template #title> Update Label </template>
       <form v-if="label" @submit.prevent="update">
-        <FormTextField v-model="updateData.name" class="mt-3" :autofocus="true" label="Label Name" />
-        <FormTextArea v-model="updateData.description" class="mt-2" label="Label Description" />
+        <FormTextField v-model="updateData.name" :autofocus="true" label="Label Name" />
+        <FormTextArea v-model="updateData.description" label="Label Description" />
         <div class="modal-action">
           <BaseButton type="submit" :loading="updating"> Update </BaseButton>
         </div>
@@ -107,8 +106,8 @@
         <header class="mb-2">
           <div class="flex flex-wrap items-end gap-2">
             <div class="avatar placeholder mb-auto">
-              <div class="bg-neutral-focus text-neutral-content rounded-full w-12 ml-2">
-                <Icon name="heroicons-tag" class="h-7 w-7" />
+              <div class="bg-neutral-focus text-neutral-content rounded-full w-12">
+                <Icon name="mdi-package-variant" class="h-7 w-7" />
               </div>
             </div>
             <div>
@@ -122,13 +121,15 @@
                 </div>
               </div>
             </div>
-            <div class="ml-auto mt-2 mr-3 flex flex-wrap items-center justify-between gap-3">
-              <PageQRCode class="dropdown-left" />
-              <BaseButton size="sm" @click="openUpdate">
-                <Icon class="mr-2" name="mdi-pencil" />
-                Edit
-              </BaseButton>
-              <BaseButton class="btn btn-sm btn-error" @click="confirmDelete()">
+            <div class="ml-auto mt-2 flex flex-wrap items-center justify-between gap-3">
+              <div class="btn-group">
+                <PageQRCode class="dropdown-left" />
+                <BaseButton size="sm" @click="openUpdate">
+                  <Icon class="mr-1" name="mdi-pencil" />
+                  Edit
+                </BaseButton>
+              </div>
+              <BaseButton class="btn btn-sm" @click="confirmDelete()">
                 <Icon name="mdi-delete" class="mr-2" />
                 Delete
               </BaseButton>
@@ -136,7 +137,7 @@
           </div>
         </header>
         <div class="divider my-0 mb-1"></div>
-        <Markdown v-if="label && label.description" class="text-base ml-2" :source="label.description"> </Markdown>
+        <Markdown v-if="label && label.description" class="text-base" :source="label.description"> </Markdown>
       </div>
       <section v-if="label && items">
         <ItemViewSelectable :items="items" />

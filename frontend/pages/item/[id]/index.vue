@@ -63,10 +63,6 @@
     item.value.quantity = newQuantity;
   }
 
-  function navigateToEdit() {
-    navigateTo(`/item/${itemId.value}/edit`);
-  }
-
   type FilteredAttachments = {
     attachments: ItemAttachment[];
     warranty: ItemAttachment[];
@@ -401,6 +397,11 @@
         name: "Maintenance",
         to: `/item/${itemId.value}/maintenance`,
       },
+      {
+        id: "edit",
+        name: "Edit",
+        to: `/item/${itemId.value}/edit`,
+      },
     ];
   });
 
@@ -493,13 +494,7 @@
                 <input v-model="preferences.showEmpty" type="checkbox" class="toggle toggle-primary" />
                 <span class="label-text ml-4"> Show Empty </span>
               </label>
-              <div class="flex items-end gap-5 mr-3">
-                <PageQRCode />
-                <BaseButton size="sm" @click="navigateToEdit">
-                  <Icon class="mr-4" name="mdi-pencil" />
-                  Edit
-                </BaseButton>
-              </div>
+              <PageQRCode />
             </div>
           </template>
           <DetailsSection :details="itemDetails">
